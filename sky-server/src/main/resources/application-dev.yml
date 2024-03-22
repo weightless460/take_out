@@ -6,3 +6,8 @@ sky:
     database: sky_take_out
     username: root
     password: root
+  alioss:
+    access-key-id: LTAI5tJkRr7HgHoSsXmpw9y6
+    access-key-secret: 9S3XtYi4iygG2EDSdtQ1zYbBvk8cqK
+    endpoint: oss-cn-heyuan.aliyuncs.com
+    bucket-name: boardroptest
