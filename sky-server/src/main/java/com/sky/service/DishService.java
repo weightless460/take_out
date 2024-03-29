@@ -1,12 +1,11 @@
 package com.sky.service;
 
-import com.sky.dto.DishDTO;
-import com.sky.dto.EmployeeDTO;
-import com.sky.dto.EmployeeLoginDTO;
-import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.dto.*;
 import com.sky.entity.Employee;
 import com.sky.result.PageResult;
 import sun.reflect.generics.tree.VoidDescriptor;
+
+import java.util.List;
 
 public interface DishService {
 
@@ -15,4 +14,15 @@ public interface DishService {
      * @param dto
      */
     public void saveWithFlavor(DishDTO dto);
+
+    /**
+     * 菜品分页查询
+     * @param dto
+     * @return
+     */
+    PageResult pageQuery(DishPageQueryDTO dto);
+    /**
+     * 菜品的删除
+     */
+    void deleteBatch(List<Long> ids);
 }
