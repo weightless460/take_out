@@ -11,3 +11,11 @@ sky:
     access-key-secret: 9S3XtYi4iygG2EDSdtQ1zYbBvk8cqK
     endpoint: oss-cn-heyuan.aliyuncs.com
     bucket-name: boardroptest
+  redis:
+    host: localhost
+    port: 6379
+    password: titi
+    database: 0
+  wechat:
+    appid: wxb7779d2289c76657
+    secret: f320b3cf58083a6381e624a13f6373a9
