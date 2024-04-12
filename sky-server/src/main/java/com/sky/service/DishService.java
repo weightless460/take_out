@@ -1,6 +1,7 @@
 package com.sky.service;
 
 import com.sky.dto.*;
+import com.sky.entity.Dish;
 import com.sky.entity.Employee;
 import com.sky.result.PageResult;
 import com.sky.vo.DishVO;
@@ -36,4 +37,10 @@ public interface DishService {
      * @param dto
      */
     void updataWithFlavor(DishDTO dto);
+    /**
+     * 条件查询菜品和口味
+     * @param dish
+     * @return
+     */
+    List<DishVO> listWithFlavor(Dish dish);
 }
