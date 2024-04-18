@@ -8,6 +8,7 @@ import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
+import com.sky.entity.Setmeal;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorsMapper;
 import com.sky.mapper.DishMapper;
@@ -35,6 +36,9 @@ public class DishServiceImpl implements DishService {
     private DishFlavorsMapper flavorsMapper;
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+
+    @Autowired
+    private SetmealMapper setmealMapper;
 
     /**
      * 新增菜品和对应的口味数据
@@ -97,7 +101,7 @@ public class DishServiceImpl implements DishService {
         //     flavorsMapper.deleteByDishId(id);
         // }
         //优化
-        mapper.deleteByIds(ids);
+        mapper.deleteBatch(ids);
         flavorsMapper.deleteByDishIds(ids);
     }
 
@@ -157,6 +161,35 @@ public class DishServiceImpl implements DishService {
         }
 
         return dishVOList;
+    }
+    /**
+     * 启用或禁用菜品
+     *
+     * @param status
+     * @param id
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        Dish dish = new Dish();
+        dish.setId(id);
+        dish.setStatus(status);
+        mapper.updata(dish);
+
+        // 如果是禁用，需要将套餐中的菜品也禁用
+        if (status == StatusConstant.DISABLE) {
+            List<Long> dishIds = new ArrayList<>();
+            dishIds.add(id);
+            List<Long> setmealIds = setmealDishMapper.getSetmealIdsByDishIds(dishIds);
+            if (setmealIds != null && setmealIds.size() > 0) {
+                for (Long setmealId : setmealIds) {
+                    Setmeal setmeal = Setmeal.builder()
+                            .id(setmealId)
+                            .status(StatusConstant.DISABLE)
+                            .build();
+                    setmealMapper.update(setmeal);
+                }
+            }
+        }
     }
 }
 
